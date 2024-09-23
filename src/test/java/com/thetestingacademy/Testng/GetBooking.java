@@ -1,8 +1,11 @@
 package com.thetestingacademy.Testng;
 
+import io.qameta.allure.Description;
+import io.qameta.allure.SeverityLevel;
 import io.restassured.RestAssured;
-import org.testng.annotations.*;
 
+import org.testng.annotations.*;
+import io.qameta.allure.Severity;
 public class GetBooking {
 
     @BeforeSuite
@@ -33,7 +36,8 @@ public class GetBooking {
         System.out.println("BeforeMethod");
     }
 
-
+    @Severity(SeverityLevel.NORMAL)
+    @Description("Get Booking")
     @Test
 
     public void test_get(){
