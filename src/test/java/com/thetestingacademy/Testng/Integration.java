@@ -8,12 +8,14 @@ import io.restassured.specification.RequestSpecification;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
+import static org.assertj.core.api.Assertions.*;
+
 public class Integration {
      RequestSpecification r;
      ValidatableResponse vr;
      Response resp;
 String token;
-String bookingId;
+Integer bookingId;
 
 
     @BeforeTest
@@ -34,12 +36,13 @@ String bookingId;
         ValidatableResponse vr = resp.then();
         vr.log().all().statusCode(200);
         token = resp.jsonPath().getString("token");
+        assertThat(token).isNotNull();
         System.out.println(token);
         return token;
     }
 
 
-    public String getBookingID(){
+    public Integer getBookingID(){
 
 
 
@@ -71,7 +74,11 @@ String bookingId;
 //
         vr = resp.then().log().all();
         vr.log().all().statusCode(200);
-        bookingId = resp.jsonPath().getString("bookingid");
+        bookingId = resp.jsonPath().getInt("bookingid");
+        assertThat(bookingId).isNotNull().isNotZero().isPositive();
+
+
+
         System.out.println(bookingId);
         return bookingId;
 
@@ -108,9 +115,11 @@ String bookingId;
         r.body(payloadpatch).log().all();
 //
         resp = r.when().put();
-//
+      String firstname = resp.then().extract().path("firstname");
         vr = resp.then().log().all();
         vr.log().all().statusCode(200);
+
+        assertThat(firstname).isEqualTo("Nanda").isNotEmpty().isNotBlank();
 
 
     }
@@ -133,10 +142,10 @@ String bookingId;
 
 
         resp = r.when().get();
-
+        String firstname = resp.then().extract().path("firstname");
         vr = resp.then().log().all();
         vr.log().all().statusCode(200);
-
+        assertThat(firstname).isEqualTo("Nanda").isNotEmpty().isNotBlank();
 
     }
 
@@ -157,6 +166,7 @@ String bookingId;
 
 
         resp = r.when().delete();
+        assertThat(resp).as("Created");
         vr = resp.then().log().all();
         vr.log().all().statusCode(201);
 
@@ -179,6 +189,7 @@ String bookingId;
         resp = r.when().get();
 
         vr = resp.then().log().all();
+        assertThat(resp).as("Not Found");
         vr.log().all().statusCode(404);
     }
 
