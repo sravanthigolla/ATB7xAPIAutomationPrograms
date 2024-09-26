@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="All Test Suite">
+    <test verbose="2" preserve-order="true" name="C:/Users/91900/IdeaProjects/ATB7xAPIAutomationPrograms">
+        <classes>
+            <class name="com.thetestingacademy.Req_Hashmap.Integration12">
+                <methods>
+                    <include name="updateBookingID"/>
+                    <include name="getUpdatedBookingID"/>
+                    <include name="deleteBookingID"/>
+                    <include name="getdeletedBookingID"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+</suite>
